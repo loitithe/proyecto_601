@@ -1,0 +1,85 @@
+[
+   {
+   "_id": "cliente_id_1",
+   "pedido_id": "pedido_id_1",
+   "productos": [
+             {
+                "producto_id": 1,
+                "nombre": "Laptop HP Pavilion",
+                "cantidad": 2,
+                "precio_unitario": 799.99
+             }
+          ],
+  "total": 1599.98,
+  "fecha_pedido": ISODate("2023-01-01T12:30:00.000Z")
+ },
+{
+   "_id": "cliente_id_2",
+   "pedido_id": "pedido_id_2",
+   "productos": [
+             {
+                "producto_id": 2,
+                "nombre": "Smartphone Samsung Galaxy S21",
+                "cantidad": 1,
+                "precio_unitario": 999.99
+             }
+          ],
+  "total": 999.99,
+  "fecha_pedido": ISODate("2023-02-15T14:45:00.000Z")
+},
+{
+   "_id": "cliente_id_3",
+   "pedido_id": "pedido_id_3",
+   "productos": [
+             {
+                "producto_id": 3,
+                "nombre": "Televisor LG 4K",
+                "cantidad": 1,
+                "precio_unitario": 1499.99
+             },
+             {
+                "producto_id": 4,
+                "nombre": "Barra de sonido Sony",
+                "cantidad": 1,
+                "precio_unitario": 299.99
+             }
+          ],
+  "total": 1799.98,
+  "fecha_pedido": ISODate("2023-03-10T16:00:00.000Z")
+},
+{
+   "_id": "cliente_id_4",
+   "pedido_id": "pedido_id_4",
+   "productos": [
+             {
+                "producto_id": 5,
+                "nombre": "Refrigerador Whirlpool",
+                "cantidad": 1,
+                "precio_unitario": 1299.99
+             }
+          ],
+  "total": 1299.99,
+  "fecha_pedido": ISODate("2023-04-05T10:20:00.000Z")
+},
+{
+   "_id": "cliente_id_5",
+   "pedido_id": "pedido_id_5",
+   "productos": [
+             {
+                "producto_id": 6,
+                "nombre": "Cámara Canon EOS R5",
+                "cantidad": 1,
+                "precio_unitario": 3499.99
+             },
+             {
+                "producto_id": 7,
+                "nombre": "Trípode Manfrotto",
+                "cantidad": 1,
+                "precio_unitario": 199.99
+             }
+          ],
+  "total": 3699.98,
+  "fecha_pedido": ISODate("2023-05-20T11:10:00.000Z")
+}
+
+]

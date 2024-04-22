@@ -1,14 +1,21 @@
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.*;
 import com.mongodb.client.result.DeleteResult;
 import org.basex.examples.api.BaseXClient;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+
+import static com.mongodb.client.model.Filters.eq;
 
 public class Main {
     private static Scanner sc;
@@ -78,10 +85,39 @@ public class Main {
     }
 
     public static void viewCart(ObjectId client) {
-        for (Object o : collection_carrito.find(new Document("_id", client))) {
-            System.out.println(o.toString());
+        AggregateIterable<Document> iterDoc = collection_carrito.aggregate(
+                Arrays.asList(
+                        Aggregates.match(Filters.eq("_id", client)), // Filtrar por el cliente específico
+                        Aggregates.project(
+                                Projections.fields(
+                                        Projections.excludeId(),
+                                        Projections.computed("total",
+                                                new Document("$sum", "$productos.precio_unitario")
+                                        ),
+                                        Projections.include("productos") // Incluir el campo productos
+                                )
+                        )
+                )
+        );
+
+        for (Document document : iterDoc) {
+            List<Document> productos = (List<Document>) document.get("productos");
+            if (productos != null) { // Verificar si productos no es null
+                System.out.println("Productos en carrito:");
+                for (Document producto : productos) {
+                    System.out.println("- Nombre: " + producto.get("nombre"));
+                    System.out.println("  Cantidad: " + producto.get("cantidad"));
+                    System.out.println("  Precio unitario: " + producto.get("precio_unitario"));
+                }
+            } else {
+                System.out.println("No hay productos en el carrito.");
+            }
+            System.out.println("Precio total: " + document.get("total"));
         }
     }
+
+
+
 
     public static void addProductToCart(ObjectId clientSelected) {
         String idProducto;
@@ -94,12 +130,21 @@ public class Main {
             if (disponibilidad >= cantidad) {
                 System.out.println(String.format("Hay %d  %s disponibles ", disponibilidad, nombreProducto));
                 Double precio = getProductPrice(idProducto);
-                Document productoEnCarrito = new Document("_id", clientSelected.toString())
-                        .append("producto_id", idProducto)
+
+                Document carritoCliente = collection_carrito.find(eq("_id",clientSelected)).first();
+                if (carritoCliente==null){
+                    carritoCliente = new Document("_id",clientSelected).append("productos",new ArrayList<>());
+                }
+                Document productoEnCarrito = new Document("producto_id", idProducto)
                         .append("nombre", nombreProducto)
                         .append("cantidad", String.format("%d", cantidad))
-                        .append("precio_unitario", String.format("%f", precio));
-                collection_carrito.insertOne(productoEnCarrito);
+                        .append("precio_unitario",  precio);
+                List<Document> productos = (List<Document>) carritoCliente.get("productos");
+                productos.add(productoEnCarrito);
+                // Actualizar el documento del carrito en la base de datos
+                collection_carrito.updateOne(eq("_id", clientSelected),
+                        new Document("$set", carritoCliente),
+                        new UpdateOptions().upsert(true));
             }
 
         } while (pedirString("Insertar otro producto al carro?(s/n)").equalsIgnoreCase("s"));
@@ -240,7 +285,7 @@ public class Main {
 
         Double precio = 0.0;
         try (BaseXClient session = new BaseXClient("localhost", 1984, "admin", "abc123")) {
-            String consulta = String.format("for $p in db:get('productos')//producto[id=%s] return data($p/precio)", idProducto);
+            String consulta = String.format("for $p in db:get('productos')//producto[id=%s] return number($p/precio)", idProducto);
             BaseXClient.Query query = session.query(consulta);
             query.bind("$nombre", "");
             while (query.more()) {

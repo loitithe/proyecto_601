@@ -1,38 +1,57 @@
- [
-    {
-          "_id": "cliente_id_1",
-          "producto_id": 1,
-          "nombre": "Laptop HP Pavilion",
-          "cantidad": 2,
-          "precio_unitario": 799.99
- },
- {
+[
+  {
+    "_id": "cliente_id_1",
+    "productos": [
+      {
+        "producto_id": 1,
+        "nombre": "Laptop HP Pavilion",
+        "cantidad": 2,
+        "precio_unitario": 799.99
+      }
+    ]
+  },
+  {
     "_id": "cliente_id_3",
-          "producto_id": 3,
-          "nombre": "Tablet Lenovo Tab M10",
-          "cantidad": 1,
-          "precio_unitario": 199.99
- },
- {
+    "productos": [
+      {
+        "producto_id": 3,
+        "nombre": "Tablet Lenovo Tab M10",
+        "cantidad": 1,
+        "precio_unitario": 199.99
+      }
+    ]
+  },
+  {
     "_id": "cliente_id_2",
-          "producto_id": 2,
-          "nombre": "Tablet Lenovo Tab M10",
-          "cantidad": 1,
-          "precio_unitario": 199.99
- },
- {
+    "productos": [
+      {
+        "producto_id": 2,
+        "nombre": "Tablet Lenovo Tab M10",
+        "cantidad": 1,
+        "precio_unitario": 199.99
+      }
+    ]
+  },
+  {
     "_id": "cliente_id_4",
-          "producto_id": 3,
-          "nombre": "Tablet Lenovo Tab M10",
-          "cantidad": 1,
-          "precio_unitario": 199.99
- },
- {
+    "productos": [
+      {
+        "producto_id": 3,
+        "nombre": "Tablet Lenovo Tab M10",
+        "cantidad": 1,
+        "precio_unitario": 199.99
+      }
+    ]
+  },
+  {
     "_id": "cliente_id_5",
-          "producto_id": 1,
-          "nombre": "Tablet Lenovo Tab M10",
-          "cantidad": 1,
-          "precio_unitario": 199.99
- }
- ]
-
+    "productos": [
+      {
+        "producto_id": 1,
+        "nombre": "Tablet Lenovo Tab M10",
+        "cantidad": 1,
+        "precio_unitario": 199.99
+      }
+    ]
+  }
+]

@@ -1,10 +1,6 @@
 <component name="libraryTable">
   <library name="BaseXJarLite-2eb139d69982d7b28837826297556706">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/AD/3ªEva/BaseXJarLite-2eb139d69982d7b28837826297556706.jar!/" />
-      <root url="jar://$USER_HOME$/OneDrive/Documentos/ad/3erTrimestre/BaseXJarLite-2eb139d69982d7b28837826297556706.jar!/" />
-      <root url="jar://$USER_HOME$/OneDrive/Documentos/ad/3erTrimestre/mongo-java-driver-3.12.14.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

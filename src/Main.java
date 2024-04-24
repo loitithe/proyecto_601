@@ -30,7 +30,8 @@ public class Main {
     public static void main(String[] args) {
         sc = new Scanner(System.in);
         //    menuXML();
-        menuMongo();
+        getEmail(getIdCliente("g"));
+        //    menuMongo();
     }
 
     //############ CONSULTAS MONGODB ########################
@@ -84,40 +85,39 @@ public class Main {
         }
     }
 
-    public static void viewCart(ObjectId client) {
-        AggregateIterable<Document> iterDoc = collection_carrito.aggregate(
-                Arrays.asList(
-                        Aggregates.match(Filters.eq("_id", client)), // Filtrar por el cliente específico
-                        Aggregates.project(
-                                Projections.fields(
-                                        Projections.excludeId(),
-                                        Projections.computed("total",
-                                                new Document("$sum", "$productos.precio_unitario")
-                                        ),
-                                        Projections.include("productos") // Incluir el campo productos
-                                )
-                        )
-                )
-        );
+    public static void addPedido(ObjectId client) {
+        viewCart(client);
+        String confirmacion = pedirString("Desea pagar el carrito ?s/n)");
+        if (confirmacion.equalsIgnoreCase("s")) {
+            AggregateIterable<Document> iterDoc = collection_pedidos.aggregate(
+                    Arrays.asList(
+                            Aggregates.group(
+                                    "$identificador",
+                                    Accumulators.sum("precio_unitario", 1)
+                            )
+                    )
 
-        for (Document document : iterDoc) {
-            List<Document> productos = (List<Document>) document.get("productos");
-            if (productos != null) { // Verificar si productos no es null
-                System.out.println("Productos en carrito:");
-                for (Document producto : productos) {
-                    System.out.println("- Nombre: " + producto.get("nombre"));
-                    System.out.println("  Cantidad: " + producto.get("cantidad"));
-                    System.out.println("  Precio unitario: " + producto.get("precio_unitario"));
-                }
-            } else {
-                System.out.println("No hay productos en el carrito.");
-            }
-            System.out.println("Precio total: " + document.get("total"));
+            );
         }
     }
 
-
-
+    public static List<Document> viewCart(ObjectId client) {
+        List<Document> productos = new ArrayList<>();
+        AggregateIterable<Document> iterDoc = collection_carrito.aggregate(
+                Arrays.asList(new Document("$lookup",
+                        new Document("from", "clientes")
+                                .append("localField", "identificador")
+                                .append("foreignField", "email")
+                                .append("as", "mail_cliente")))
+        );
+        for (Document document : iterDoc) {
+            productos = (List<Document>) document.get("productos");
+            for (Document producto : productos) {
+                System.out.println(producto.toJson());
+            }
+        }
+        return productos;
+    }
 
     public static void addProductToCart(ObjectId clientSelected) {
         String idProducto;
@@ -131,24 +131,25 @@ public class Main {
                 System.out.println(String.format("Hay %d  %s disponibles ", disponibilidad, nombreProducto));
                 Double precio = getProductPrice(idProducto);
 
-                Document carritoCliente = collection_carrito.find(eq("_id",clientSelected)).first();
-                if (carritoCliente==null){
-                    carritoCliente = new Document("_id",clientSelected).append("productos",new ArrayList<>());
-                }
-                Document productoEnCarrito = new Document("producto_id", idProducto)
+                Document nuevoProducto = new Document("product_id", idProducto)
                         .append("nombre", nombreProducto)
-                        .append("cantidad", String.format("%d", cantidad))
-                        .append("precio_unitario",  precio);
-                List<Document> productos = (List<Document>) carritoCliente.get("productos");
-                productos.add(productoEnCarrito);
-                // Actualizar el documento del carrito en la base de datos
-                collection_carrito.updateOne(eq("_id", clientSelected),
-                        new Document("$set", carritoCliente),
-                        new UpdateOptions().upsert(true));
+                        .append("cantidad", cantidad)
+                        .append("precio_unitoria", precio);
+                viewCart(clientSelected).add(nuevoProducto);
+                //    collection_carrito.updateOne(eq("identificador", ));
+
             }
 
         } while (pedirString("Insertar otro producto al carro?(s/n)").equalsIgnoreCase("s"));
 
+    }
+
+    public static String getEmail(ObjectId idCliente) {
+        String email = "";
+        email = Arrays.asList(new Document("$match",
+                new Document("_id", idCliente).get("email"))).toString();
+
+        return email;
     }
 
     /**

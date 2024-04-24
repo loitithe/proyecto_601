@@ -1,38 +1,60 @@
-[
-  {
-    "nombre": "Nombre Cliente 1",
-    "email": "cliente1@example.com",
-    "direccion": "Dirección Cliente 1",
-    "carrito": [],
-    "pedidos":[]
+[{
+  "_id": {
+    "$oid": "6627e654747bbe76239326d2"
+  },
+  "nombre": "Nombre Cliente 1",
+  "email": "cliente1@example.com",
+  "direccion": "Dirección Cliente 1",
+  "carrito": [],
+  "pedidos": []
 },
 {
-    "nombre": "Nombre Cliente 2",
-    "email": "cliente2@example.com",
-    "direccion": "Dirección Cliente 2",
-    "carrito": [],
-    "pedidos":[]
+  "_id": {
+    "$oid": "6627e654747bbe76239326d3"
+  },
+  "nombre": "Nombre Cliente 2",
+  "email": "cliente2@example.com",
+  "direccion": "Dirección Cliente 2",
+  "carrito": [],
+  "pedidos": []
 },
 {
-    "nombre": "Nombre Cliente 3",
-    "email": "cliente3@example.com",
-    "direccion": "Dirección Cliente 3",
-    "carrito": [],
-    "pedidos":[]
+  "_id": {
+    "$oid": "6627e654747bbe76239326d4"
+  },
+  "nombre": "Nombre Cliente 3",
+  "email": "cliente3@example.com",
+  "direccion": "Dirección Cliente 3",
+  "carrito": [],
+  "pedidos": []
 },
 {
-    "nombre": "Nombre Cliente 4",
-    "email": "cliente1@example.com",
-    "direccion": "Dirección Cliente 4",
-    "carrito": [],
-    "pedidos":[]
+  "_id": {
+    "$oid": "6627e654747bbe76239326d5"
+  },
+  "nombre": "Nombre Cliente 4",
+  "email": "cliente1@example.com",
+  "direccion": "Dirección Cliente 4",
+  "carrito": [],
+  "pedidos": []
 },
 {
-    "nombre": "Nombre Cliente 5",
-    "email": "cliente5@example.com",
-    "direccion": "Dirección Cliente 5",
-    "carrito": [],
-    "pedidos":[]
-}  
-    
-]
+  "_id": {
+    "$oid": "6627e654747bbe76239326d6"
+  },
+  "nombre": "Nombre Cliente 5",
+  "email": "cliente5@example.com",
+  "direccion": "Dirección Cliente 5",
+  "carrito": [],
+  "pedidos": []
+},
+{
+  "_id": {
+    "$oid": "6627e705ffedfd3fc9e68dfa"
+  },
+  "nombre": "gg",
+  "email": "g",
+  "direccion": "polo",
+  "carrito": {},
+  "pedidos": {}
+}]

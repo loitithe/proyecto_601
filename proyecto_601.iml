@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="BaseXJarLite-2eb139d69982d7b28837826297556706" level="project" />
     <orderEntry type="library" name="mongo-java-driver-3.12.14" level="project" />
+    <orderEntry type="library" name="BaseXJarLite-2eb139d69982d7b288378262975567061" level="project" />
   </component>
 </module>
